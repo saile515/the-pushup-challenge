@@ -37,8 +37,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 			}
 		}).then((res) => res.json());
 
-		console.log(response);
-
 		if (response.error) {
 			session.destroy();
 			event.cookies.delete('session', { path: '/' });

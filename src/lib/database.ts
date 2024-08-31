@@ -163,4 +163,4 @@ Session.init(
 Session.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 User.hasOne(Session, { foreignKey: 'userId', as: 'user' });
 
-sequelize.sync({ alter: true });
+await sequelize.sync({ alter: true });
