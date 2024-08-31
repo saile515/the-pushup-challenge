@@ -12,7 +12,7 @@ try {
 }
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-	declare id: number;
+	declare id: string;
 	declare username: string;
 	declare avatarUrl: string;
 	declare joinDate: Date;
@@ -49,10 +49,9 @@ export class Session extends Model<InferAttributes<Session>, InferCreationAttrib
 User.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			primaryKey: true,
 			allowNull: false,
-			autoIncrement: true,
 			unique: true
 		},
 		username: {
