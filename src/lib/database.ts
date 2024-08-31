@@ -149,7 +149,7 @@ Session.init(
 			allowNull: false
 		},
 		userId: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			references: {
 				model: User,
 				key: 'id'
