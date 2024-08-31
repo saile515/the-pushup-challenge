@@ -12,7 +12,7 @@ try {
 }
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-	declare id: string;
+	declare id: number;
 	declare username: string;
 	declare avatarUrl: string;
 	declare joinDate: Date;
@@ -28,7 +28,7 @@ export class ChallengeDay extends Model<
 	declare date: Date;
 	declare targetScore: number;
 	declare score: number;
-	declare userId: string;
+	declare userId: number;
 }
 
 export enum AuthProvider {
@@ -42,14 +42,14 @@ export class Session extends Model<InferAttributes<Session>, InferCreationAttrib
 	declare refreshToken: string;
 	declare sessionToken: string;
 	declare expires: Date;
-	declare userId: string;
+	declare userId: number;
 	declare user?: User;
 }
 
 User.init(
 	{
 		id: {
-			type: DataTypes.STRING,
+			type: DataTypes.BIGINT,
 			primaryKey: true,
 			allowNull: false,
 			unique: true
@@ -104,7 +104,7 @@ ChallengeDay.init(
 			defaultValue: 0
 		},
 		userId: {
-			type: DataTypes.STRING,
+			type: DataTypes.BIGINT,
 			references: {
 				model: User,
 				key: 'id'
@@ -121,7 +121,7 @@ ChallengeDay.belongsTo(User, { foreignKey: 'userId' });
 Session.init(
 	{
 		id: {
-			type: DataTypes.STRING,
+			type: DataTypes.INTEGER,
 			primaryKey: true,
 			allowNull: false,
 			autoIncrement: true,
@@ -149,7 +149,7 @@ Session.init(
 			allowNull: false
 		},
 		userId: {
-			type: DataTypes.STRING,
+			type: DataTypes.BIGINT,
 			references: {
 				model: User,
 				key: 'id'
