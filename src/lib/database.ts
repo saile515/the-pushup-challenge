@@ -28,7 +28,7 @@ export class ChallengeDay extends Model<
 	declare date: Date;
 	declare targetScore: number;
 	declare score: number;
-	declare userId: number;
+	declare userId: string;
 }
 
 export enum AuthProvider {
@@ -42,7 +42,7 @@ export class Session extends Model<InferAttributes<Session>, InferCreationAttrib
 	declare refreshToken: string;
 	declare sessionToken: string;
 	declare expires: Date;
-	declare userId: number;
+	declare userId: string;
 	declare user?: User;
 }
 
@@ -104,7 +104,7 @@ ChallengeDay.init(
 			defaultValue: 0
 		},
 		userId: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			references: {
 				model: User,
 				key: 'id'
@@ -121,7 +121,7 @@ ChallengeDay.belongsTo(User, { foreignKey: 'userId' });
 Session.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			primaryKey: true,
 			allowNull: false,
 			autoIncrement: true,
