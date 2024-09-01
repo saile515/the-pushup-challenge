@@ -3,22 +3,32 @@
 	import Card from './card.svelte';
 </script>
 
-<Card>
-	<div class="font-bold m-2">
-		<span>Date</span>
-		<span class="float-right mr-8">Target Score</span>
-		<span class="float-right mr-12">Score</span>
-	</div>
-	<ol class="overflow-auto h-full">
-		{#each $page.data.previousDays as day}
-			<li class="flex gap-4 border-b border-zinc-900/20 p-2">
-				<span>{day.date}</span>
-				<span
-					class={`ml-auto mr-28 ${day.score == day.targetScore ? 'bg-emerald-600 px-2 rounded-full' : ''}`}
-					>{day.score}</span
-				>
-				<span class="mr-8">{day.targetScore}</span>
-			</li>
-		{/each}
-	</ol>
+<Card class="sm:px-8">
+	<table class="w-full border-spacing-y-3 border-separate">
+		<colgroup>
+			<col span="1" class="w-24" />
+			<col span="1" class="w-full" />
+			<col span="1" class="min-w-20" />
+		</colgroup>
+		<thead class="text-right">
+			<tr>
+				<th class="text-left">Date</th>
+				<th>Score</th>
+				<th>Target</th>
+			</tr>
+		</thead>
+		<tbody class="text-right">
+			{#each $page.data.previousDays as day}
+				<tr>
+					<td>{day.date}</td>
+					<td>
+						<span class={`${day.score == day.targetScore ? 'bg-cyan-700 rounded-full px-2' : ''}`}
+							>{day.score}</span
+						>
+					</td>
+					<td>{day.targetScore}</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
 </Card>

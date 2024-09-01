@@ -39,7 +39,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="mt-auto m-8 min-h-80 grid grid-cols-1 sm:grid-cols-2 gap-8">
+	<div class="!mt-auto m-4 sm:m-8 min-h-80 grid grid-cols-1 sm:grid-cols-2 gap-8">
 		<Leaderboard />
 		<PreviousDays />
 	</div>

@@ -52,14 +52,25 @@ async function createPreviousDays(user: User) {
 async function getLeaderboard() {
 	const users = await User.findAll({ where: { public: true }, include: ChallengeDay });
 
-	return users.map((user) => {
-		const score = (user as User & { ChallengeDays: ChallengeDay[] }).ChallengeDays.reduce(
+	return users.map((_user) => {
+		const user = _user as User & { ChallengeDays: ChallengeDay[] };
+
+		const score = user.ChallengeDays.reduce(
 			(total, challengeDay) =>
 				total + (challengeDay.score == challengeDay.targetScore ? challengeDay.targetScore : 0),
 			0
 		);
 
-		return { ...user.toJSON(), score };
+		const days = user.ChallengeDays.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+		let i = 0;
+		for (; i < days.length; i++) {
+			if (days[i].score != days[i].targetScore) {
+				break;
+			}
+		}
+
+		return { ...user.toJSON(), score, streak: i };
 	});
 }
 
