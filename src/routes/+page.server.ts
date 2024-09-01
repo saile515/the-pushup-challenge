@@ -54,6 +54,7 @@ async function getLeaderboard() {
 
 	return users.map((_user) => {
 		const user = _user as User & { ChallengeDays: ChallengeDay[] };
+		user.ChallengeDays.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 		const score = user.ChallengeDays.reduce(
 			(total, challengeDay) =>
@@ -61,11 +62,9 @@ async function getLeaderboard() {
 			0
 		);
 
-		const days = user.ChallengeDays.sort((a, b) => b.date.getTime() - a.date.getTime());
-
 		let i = 0;
-		for (; i < days.length; i++) {
-			if (days[i].score != days[i].targetScore) {
+		for (; i < user.ChallengeDays.length; i++) {
+			if (user.ChallengeDays[i].score != user.ChallengeDays[i].targetScore) {
 				break;
 			}
 		}
