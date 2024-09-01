@@ -63,7 +63,7 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 		provider: AuthProvider.Discord,
 		accessToken: response.access_token,
 		refreshToken: response.refresh_token,
-		expires: new Date(Date.now() + response.expires_in),
+		expires: new Date(Date.now() + response.expires_in * 1000),
 		sessionToken: randomBytes(24).toString('base64'),
 		userId: user.id
 	});
@@ -71,7 +71,8 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 	cookies.set('session', session.sessionToken, {
 		path: '/',
 		httpOnly: true,
-		secure: NODE_ENV == 'production'
+		secure: NODE_ENV == 'production',
+		expires: session.expires
 	});
 
 	redirect(303, '/');

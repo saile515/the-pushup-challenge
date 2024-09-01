@@ -1,7 +1,7 @@
 import type { Handle } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import { Session } from '$lib/database';
-import { DISCORD_API_URL, DISCORD_CLIENT_ID, DISCORD_SECRET } from '$env/static/private';
+import { DISCORD_API_URL, DISCORD_CLIENT_ID, DISCORD_SECRET, NODE_ENV } from '$env/static/private';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	if (event.url.pathname == '/auth') {
@@ -21,7 +21,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		redirect(303, '/auth');
 	}
 
-	if (session.expires < new Date(Date.now() + 4800)) {
+	if (session.expires < new Date(Date.now() + 4800000)) {
 		const query = {
 			client_id: DISCORD_CLIENT_ID,
 			client_secret: DISCORD_SECRET,
@@ -45,9 +45,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 		session.accessToken = response.access_token;
 		session.refreshToken = response.refresh_token;
-		session.expires = new Date(Date.now() + response.expires_in);
+		session.expires = new Date(Date.now() + response.expires_in * 1000);
 
 		session.save();
+
+		event.cookies.set('session', sessionToken, {
+			path: '/',
+			expires: session.expires,
+			secure: NODE_ENV == 'production',
+			httpOnly: true
+		});
 	}
 
 	return await resolve(event);
