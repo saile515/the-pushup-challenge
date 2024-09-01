@@ -72,7 +72,7 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 		path: '/',
 		httpOnly: true,
 		secure: NODE_ENV == 'production',
-		expires: session.expires
+		expires: new Date('2100-01-01')
 	});
 
 	redirect(303, '/');

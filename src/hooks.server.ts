@@ -48,13 +48,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 		session.expires = new Date(Date.now() + response.expires_in * 1000);
 
 		session.save();
-
-		event.cookies.set('session', sessionToken, {
-			path: '/',
-			expires: session.expires,
-			secure: NODE_ENV == 'production',
-			httpOnly: true
-		});
 	}
 
 	return await resolve(event);
