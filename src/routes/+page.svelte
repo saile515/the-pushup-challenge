@@ -18,6 +18,7 @@
 		<p class="text-7xl sm:text-8xl">{$page.data.today.score}/{$page.data.today.targetScore}</p>
 		<div class="flex flex-wrap justify-center m-8">
 			<div class="flex">
+				<ChangeScore delta={-100000} label="Min" />
 				{#if $page.data.today.targetScore >= 100}
 					<ChangeScore delta={-100} />
 				{/if}
@@ -36,6 +37,7 @@
 				{#if $page.data.today.targetScore >= 100}
 					<ChangeScore delta={100} />
 				{/if}
+				<ChangeScore delta={100000} label="Max" />
 			</div>
 		</div>
 	</div>
